@@ -3,33 +3,35 @@ package org.enset.entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 @Entity
 public class Role implements Serializable{
 	@Id
-	private String role ;
-	private String description ;
-	public String getRole() {
-		return role;
+	@GeneratedValue
+private Long id ; 
+	private String rolename ;
+	public Long getId() {
+		return id;
 	}
-	public void setRole(String role) {
-		this.role = role;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public String getDescription() {
-		return description;
+	public String getRolename() {
+		return rolename;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
+	}
+	public Role(String rolename) {
+		super();
+		this.rolename = rolename;
 	}
 	public Role() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Role(String role, String description) {
-		super();
-		this.role = role;
-		this.description = description;
-	}
+
 	 
 
 }

@@ -1,30 +1,44 @@
 package org.enset;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
-import org.enset.dao.EtudiantRepository;
-import org.enset.entities.Etudiant;
+
+import org.enset.dao.TaskRepository;
+
+import org.enset.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
-public class EtudiantApplication {
+public class EtudiantApplication extends SpringBootServletInitializer{
+	@Autowired
+private TaskRepository taskRepository ;
+	@Autowired
+	private AccountService accountService ;
 
-	public static void main(String[] args) throws ParseException {
-		ApplicationContext ctx = SpringApplication.run(EtudiantApplication.class, args);
-		EtudiantRepository etudiantrepository= ctx.getBean(EtudiantRepository.class);
-		DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
-		etudiantrepository.save(new Etudiant("zmerli","ghassen",df.parse("1992-02-12")));
-		etudiantrepository.save(new Etudiant("ahmed","khlil",df.parse("1992-02-12")));
-		etudiantrepository.save(new Etudiant("mohamed","ahmed",df.parse("1992-02-12")));
-		etudiantrepository.save(new Etudiant("sara","sara",df.parse("1992-02-12")));
-		etudiantrepository.save(new Etudiant("hamza","hamza",df.parse("1992-02-12")));
-		List<Etudiant> etd = etudiantrepository.findAll();
-		etd.forEach(e->System.out.println(e.getNom()));
+	public static void main(String[] args) {
+	SpringApplication.run(EtudiantApplication.class, args);
 
 	}
-}
+	@Bean
+	public BCryptPasswordEncoder getBCPE() {
+		return new BCryptPasswordEncoder();
+	}
+/*	@Override
+	public void run(String... args) throws Exception {
+		accountService.saveUser(new User("user","123",true,null));
+		accountService.saveRole(new Role("USER"));
+		accountService.addRoleToUser("user", "USER");
+		Stream.of("T1","T2","T3").forEach(t->{
+			taskRepository.save(new Task(null,t));
+		});
+		taskRepository.findAll().forEach(t->{
+			System.out.println(t.getTaskName());
+		});
+		
+	*/}
+
+

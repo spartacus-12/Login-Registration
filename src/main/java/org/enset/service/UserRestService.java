@@ -5,7 +5,7 @@ import java.util.List;
 import org.enset.dao.RoleRepository;
 import org.enset.dao.UserRepository;
 import org.enset.entities.Role;
-import org.enset.entities.User;
+import org.enset.entities.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,31 +17,26 @@ public class UserRestService {
 	private UserRepository userRepository ;
 	@Autowired
 	private RoleRepository roleRepository ;
-	@Secured(value= {"ROLE_ADMIN"})
 	@RequestMapping(value="/adduser")
-	public User save(User u) {
+	public AppUser save(AppUser u) {
 		return userRepository.save(u);
 	}
-	@Secured(value= {"ROLE_ADMIN"})
 	@RequestMapping(value="/findusers")
-	public List<User>findAll(){
+	public List<AppUser>findAll(){
 		return userRepository.findAll() ;
 	}
-	@Secured(value= {"ROLE_ADMIN"})
 	@RequestMapping(value="/addrole")
 	public Role saveRole(Role r) {
 		return roleRepository.save(r);
 	}
-	@Secured(value= {"ROLE_ADMIN"})
 	@RequestMapping(value="/findroles")
 	public List<Role>findAllRoles(){
 		return roleRepository.findAll() ;
 	}
-	@Secured(value= {"ROLE_ADMIN"})
 	@RequestMapping(value="/addRoleToUser")
-	public User addRoleToUser(String username,String role) {
-		User u = userRepository.findById(username).get();
-		Role r = roleRepository.findById(role).get();
+	public AppUser addRoleToUser(String username,String rolename) {
+		AppUser u = userRepository.findByUsername(username);
+		Role r = roleRepository.findByRolename(rolename);
 		u.getRoles().add(r);
 		userRepository.save(u);
 		return u ;	

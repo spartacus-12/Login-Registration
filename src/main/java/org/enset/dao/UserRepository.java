@@ -1,8 +1,8 @@
 package org.enset.dao;
 
-import org.enset.entities.User;
+import org.enset.entities.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, String>{
-
+public interface UserRepository extends JpaRepository<AppUser, Long>{
+public AppUser findByUsername(String username);
 }
